@@ -9,3 +9,5 @@ if os.path.exists("heehee.wav"):
     print("Som tocado!")
 else:
     print("Arquivo heehee.wav não encontrado.")
+
+    # matheus é viado
