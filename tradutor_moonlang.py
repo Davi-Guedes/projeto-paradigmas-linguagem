@@ -1,6 +1,7 @@
 import sys
 import os
 
+
 def traduzir_linha(linha, indentacao):
     linha = linha.strip()
 
@@ -13,6 +14,10 @@ def traduzir_linha(linha, indentacao):
 
     if linha.startswith("HEEHEE"):
         conteudo = linha.replace("HEEHEE", "", 1).strip()
+
+        if conteudo == "":
+            codigo = "    " * indentacao + "tocar_heehee()"
+            return codigo, indentacao
 
         if conteudo.startswith('"') and conteudo.endswith('"') and "{" in conteudo and "}" in conteudo:
             codigo = "    " * indentacao + "tocar_heehee()\n"
@@ -44,6 +49,9 @@ def traduzir_linha(linha, indentacao):
     if linha.startswith("MOONWALK"):
         partes = linha.split()
 
+        if len(partes) != 6 or partes[2] != "FROM" or partes[4] != "TO":
+            raise SyntaxError("Uso correto: MOONWALK variavel FROM inicio TO fim")
+
         variavel = partes[1]
         inicio = partes[3]
         fim = partes[5]
@@ -54,6 +62,9 @@ def traduzir_linha(linha, indentacao):
     if linha.startswith("BACKSLIDE"):
         partes = linha.split()
 
+        if len(partes) != 6 or partes[2] != "FROM" or partes[4] != "TO":
+            raise SyntaxError("Uso correto: BACKSLIDE variavel FROM inicio TO fim")
+
         variavel = partes[1]
         inicio = partes[3]
         fim = partes[5]
@@ -63,11 +74,28 @@ def traduzir_linha(linha, indentacao):
 
     if linha.startswith("THRILLER"):
         condicao = linha.replace("THRILLER", "", 1).strip()
+
+        if condicao == "":
+            raise SyntaxError("Uso correto: THRILLER condicao")
+
         codigo = f"if {condicao}:"
+        return "    " * indentacao + codigo, indentacao + 1
+
+    if linha == "OTHERWISE":
+        indentacao -= 1
+
+        if indentacao < 0:
+            raise SyntaxError("OTHERWISE usado fora de um THRILLER")
+
+        codigo = "else:"
         return "    " * indentacao + codigo, indentacao + 1
 
     if linha in ["ENDMOONWALK", "ENDBACKSLIDE", "ENDTHRILLER"]:
         indentacao -= 1
+
+        if indentacao < 0:
+            raise SyntaxError(f"{linha} usado sem bloco correspondente")
+
         return "", indentacao
 
     raise SyntaxError(f"Comando desconhecido: {linha}")
@@ -85,14 +113,18 @@ def traduzir_arquivo(entrada):
 
     codigo_python = []
 
-    cabecalho = '''
-import os
-import winsound
+    cabecalho = '''import os
+
+try:
+    import winsound
+except ImportError:
+    winsound = None
+
 
 def tocar_heehee():
     arquivo = "heehee.wav"
 
-    if os.path.exists(arquivo):
+    if winsound is not None and os.path.exists(arquivo):
         winsound.PlaySound(arquivo, winsound.SND_FILENAME)
 '''
 
@@ -100,11 +132,19 @@ def tocar_heehee():
 
     indentacao = 0
 
-    for linha in linhas:
-        codigo, indentacao = traduzir_linha(linha, indentacao)
+    try:
+        for numero_linha, linha in enumerate(linhas, start=1):
+            codigo, indentacao = traduzir_linha(linha, indentacao)
 
-        if codigo != "":
-            codigo_python.append(codigo)
+            if codigo != "":
+                codigo_python.append(codigo)
+
+        if indentacao != 0:
+            raise SyntaxError("Existe algum bloco aberto sem fechamento")
+
+    except SyntaxError as erro:
+        print(f"Erro de sintaxe na linha {numero_linha}: {erro}")
+        return
 
     with open(saida, "w", encoding="utf-8") as arquivo:
         arquivo.write("\n".join(codigo_python))
