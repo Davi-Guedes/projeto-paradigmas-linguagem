@@ -1,17 +1,25 @@
 import sys
 import os
+import time
 
 
 def traduzir_linha(linha, indentacao):
     linha = linha.strip()
 
+    # Ignora linhas vazias
     if linha == "":
         return "", indentacao
 
+    # Comentário
+    # MoonLang: REMIX comentario
+    # Python:   # comentario
     if linha.startswith("REMIX"):
         comentario = linha.replace("REMIX", "#", 1)
         return "    " * indentacao + comentario, indentacao
 
+    # Toca o áudio heehee.wav e, opcionalmente, imprime conteúdo
+    # MoonLang: HEEHEE
+    # MoonLang: HEEHEE "Mensagem"
     if linha.startswith("HEEHEE"):
         conteudo = linha.replace("HEEHEE", "", 1).strip()
 
@@ -19,7 +27,12 @@ def traduzir_linha(linha, indentacao):
             codigo = "    " * indentacao + "tocar_heehee()"
             return codigo, indentacao
 
-        if conteudo.startswith('"') and conteudo.endswith('"') and "{" in conteudo and "}" in conteudo:
+        if (
+            conteudo.startswith('"')
+            and conteudo.endswith('"')
+            and "{" in conteudo
+            and "}" in conteudo
+        ):
             codigo = "    " * indentacao + "tocar_heehee()\n"
             codigo += "    " * indentacao + f"print(f{conteudo})"
         else:
@@ -28,29 +41,57 @@ def traduzir_linha(linha, indentacao):
 
         return codigo, indentacao
 
+    # Imprime conteúdo no terminal
+    # MoonLang: SAY "Oi"
+    # Python:   print("Oi")
     if linha.startswith("SAY"):
         conteudo = linha.replace("SAY", "", 1).strip()
 
-        if conteudo.startswith('"') and conteudo.endswith('"') and "{" in conteudo and "}" in conteudo:
+        if (
+            conteudo.startswith('"')
+            and conteudo.endswith('"')
+            and "{" in conteudo
+            and "}" in conteudo
+        ):
             codigo = "    " * indentacao + f"print(f{conteudo})"
         else:
             codigo = "    " * indentacao + f"print({conteudo})"
 
         return codigo, indentacao
 
+    # Insere atribuições ou comandos Python diretamente
+    # MoonLang: BILLIE contador = 1
+    # Python:   contador = 1
     if linha.startswith("BILLIE"):
         comando = linha.replace("BILLIE", "", 1).strip()
+
+        if comando == "":
+            raise SyntaxError("Uso correto: BILLIE comando")
+
         return "    " * indentacao + comando, indentacao
 
+    # While
+    # MoonLang: BEAT contador <= 5
+    # Python:   while contador <= 5:
     if linha.startswith("BEAT"):
-        comando = linha.replace("BEAT", "", 1).strip()
-        return "    " * indentacao + comando, indentacao
+        condicao = linha.replace("BEAT", "", 1).strip()
 
+        if condicao == "":
+            raise SyntaxError("Uso correto: BEAT condicao")
+
+        codigo = f"while {condicao}:"
+        return "    " * indentacao + codigo, indentacao + 1
+
+    # For crescente
+    # MoonLang: MOONWALK i FROM 1 TO 5
+    # Python:   for i in range(1, 5 + 1):
     if linha.startswith("MOONWALK"):
         partes = linha.split()
 
         if len(partes) != 6 or partes[2] != "FROM" or partes[4] != "TO":
-            raise SyntaxError("Uso correto: MOONWALK variavel FROM inicio TO fim")
+            raise SyntaxError(
+                "Uso correto: MOONWALK variavel FROM inicio TO fim"
+            )
 
         variavel = partes[1]
         inicio = partes[3]
@@ -59,11 +100,16 @@ def traduzir_linha(linha, indentacao):
         codigo = f"for {variavel} in range({inicio}, {fim} + 1):"
         return "    " * indentacao + codigo, indentacao + 1
 
+    # For decrescente
+    # MoonLang: BACKSLIDE i FROM 5 TO 1
+    # Python:   for i in range(5, 1 - 1, -1):
     if linha.startswith("BACKSLIDE"):
         partes = linha.split()
 
         if len(partes) != 6 or partes[2] != "FROM" or partes[4] != "TO":
-            raise SyntaxError("Uso correto: BACKSLIDE variavel FROM inicio TO fim")
+            raise SyntaxError(
+                "Uso correto: BACKSLIDE variavel FROM inicio TO fim"
+            )
 
         variavel = partes[1]
         inicio = partes[3]
@@ -72,6 +118,9 @@ def traduzir_linha(linha, indentacao):
         codigo = f"for {variavel} in range({inicio}, {fim} - 1, -1):"
         return "    " * indentacao + codigo, indentacao + 1
 
+    # Condicional if
+    # MoonLang: THRILLER idade >= 18
+    # Python:   if idade >= 18:
     if linha.startswith("THRILLER"):
         condicao = linha.replace("THRILLER", "", 1).strip()
 
@@ -81,6 +130,9 @@ def traduzir_linha(linha, indentacao):
         codigo = f"if {condicao}:"
         return "    " * indentacao + codigo, indentacao + 1
 
+    # Condicional else
+    # MoonLang: OTHERWISE
+    # Python:   else:
     if linha == "OTHERWISE":
         indentacao -= 1
 
@@ -90,7 +142,15 @@ def traduzir_linha(linha, indentacao):
         codigo = "else:"
         return "    " * indentacao + codigo, indentacao + 1
 
-    if linha in ["ENDMOONWALK", "ENDBACKSLIDE", "ENDTHRILLER"]:
+    # Finalização dos blocos
+    # Esses comandos não geram linha Python.
+    # Eles apenas encerram a indentação do bloco atual.
+    if linha in [
+        "ENDMOONWALK",
+        "ENDBACKSLIDE",
+        "ENDTHRILLER",
+        "ENDBEAT",
+    ]:
         indentacao -= 1
 
         if indentacao < 0:
@@ -98,14 +158,22 @@ def traduzir_linha(linha, indentacao):
 
         return "", indentacao
 
+    # Erro caso o comando não pertença à MoonLang
     raise SyntaxError(f"Comando desconhecido: {linha}")
 
 
 def traduzir_arquivo(entrada):
+    # O arquivo de entrada deve ser um programa MoonLang
     if not entrada.endswith(".moon"):
         print("Erro: o arquivo de entrada deve ter extensão .moon")
         return
 
+    # Verifica se o arquivo informado existe
+    if not os.path.exists(entrada):
+        print(f"Erro: arquivo não encontrado: {entrada}")
+        return
+
+    # O arquivo Python gerado terá o mesmo nome, trocando .moon por .py
     saida = entrada.replace(".moon", ".py")
 
     with open(entrada, "r", encoding="utf-8") as arquivo:
@@ -113,6 +181,8 @@ def traduzir_arquivo(entrada):
 
     codigo_python = []
 
+    # Cabeçalho colocado automaticamente no arquivo Python gerado.
+    # Ele permite que o comando HEEHEE toque o áudio.
     cabecalho = '''import os
 
 try:
@@ -152,9 +222,48 @@ def tocar_heehee():
     print(f"Arquivo traduzido com sucesso: {saida}")
 
 
+def monitorar_arquivo(entrada):
+    """
+    Observa o arquivo .moon e gera novamente o .py
+    sempre que o arquivo de origem for salvo.
+    """
+
+    if not entrada.endswith(".moon"):
+        print("Erro: o arquivo de entrada deve ter extensão .moon")
+        return
+
+    if not os.path.exists(entrada):
+        print(f"Erro: arquivo não encontrado: {entrada}")
+        return
+
+    ultima_modificacao = None
+
+    print(f"Monitorando alterações em: {entrada}")
+    print("Sempre que você salvar o arquivo .moon, o .py será atualizado.")
+    print("Pressione Ctrl + C para encerrar o monitoramento.")
+
+    try:
+        while True:
+            modificacao_atual = os.path.getmtime(entrada)
+
+            if modificacao_atual != ultima_modificacao:
+                ultima_modificacao = modificacao_atual
+                traduzir_arquivo(entrada)
+
+            time.sleep(0.5)
+
+    except KeyboardInterrupt:
+        print("\nMonitoramento encerrado.")
+
+
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) == 2:
+        traduzir_arquivo(sys.argv[1])
+
+    elif len(sys.argv) == 3 and sys.argv[2] == "--watch":
+        monitorar_arquivo(sys.argv[1])
+
+    else:
         print("Uso correto:")
         print("py tradutor_moonlang.py arquivo.moon")
-    else:
-        traduzir_arquivo(sys.argv[1])
+        print("py tradutor_moonlang.py arquivo.moon --watch")
