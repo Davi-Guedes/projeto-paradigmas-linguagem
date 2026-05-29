@@ -56,10 +56,10 @@ def traduzir_linha(linha, indentacao):
         return codigo, indentacao
 
     # Imprime conteúdo no terminal
-    # MoonLang: SAY "Oi"
+    # MoonLang: SING "Oi"
     # Python:   print("Oi")
-    if linha.startswith("SAY"):
-        conteudo = linha.replace("SAY", "", 1).strip()
+    if linha.startswith("SING"):
+        conteudo = linha.replace("SING", "", 1).strip()
         conteudo = traduzir_jackson5(conteudo)
 
         if (

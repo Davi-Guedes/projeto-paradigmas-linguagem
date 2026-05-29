@@ -1,4 +1,5 @@
 import os
+import time
 
 try:
     import winsound
@@ -39,6 +40,8 @@ for i in range(0, 4 + 1):
         break
 
     print(f"No palco agora: {integrantes[i]}")
+
+time.sleep(0.7)
 
 tocar_heehee()
 print("Fim do teste!")

@@ -46,7 +46,7 @@ Esse tradutor analisa cada linha do arquivo `.moon` e gera um arquivo Python equ
 Por exemplo, um código MoonLang como:
 
 ```moon
-SAY "Olá, mundo!"
+SING "Olá, mundo!"
 ```
 
 é traduzido para Python como:
@@ -106,7 +106,7 @@ Esse modo é útil durante o desenvolvimento, pois permite editar o código Moon
 | Comando MoonLang | Tradução para Python     | Função                                                         |
 | ---------------- | ------------------------ | -------------------------------------------------------------- |
 | `REMIX`          | `#`                      | Cria um comentário no código                                   |
-| `SAY`            | `print()`                | Imprime uma mensagem ou valor no terminal                      |
+| `SING`            | `print()`                | Imprime uma mensagem ou valor no terminal                      |
 | `HEEHEE`         | `tocar_heehee()`         | Toca o áudio `heehee.wav` e pode imprimir uma mensagem         |
 | `BILLIE`         | Comando Python direto    | Cria variáveis, atribuições ou executa comandos simples        |
 | `BEAT`           | `while`                  | Cria um laço de repetição enquanto uma condição for verdadeira |
@@ -144,14 +144,14 @@ Python gerado:
 
 ---
 
-### SAY
+### SING
 
-O comando `SAY` imprime uma informação no terminal.
+O comando `SING` imprime uma informação no terminal.
 
 MoonLang:
 
 ```moon
-SAY "Olá, mundo!"
+SING "Olá, mundo!"
 ```
 
 Python gerado:
@@ -164,7 +164,7 @@ Também é possível imprimir variáveis:
 
 ```moon
 BILLIE nome = "Michael"
-SAY nome
+SING nome
 ```
 
 Python gerado:
@@ -227,7 +227,7 @@ Outro exemplo:
 
 ```moon
 BILLIE nome = "Michael Jackson"
-SAY nome
+SING nome
 ```
 
 Python gerado:
@@ -249,7 +249,7 @@ MoonLang:
 BILLIE contador = 1
 
 BEAT contador <= 5
-    SAY "Contador: {contador}"
+    SING "Contador: {contador}"
     BILLIE contador += 1
 ENDBEAT
 ```
@@ -274,7 +274,7 @@ MoonLang:
 
 ```moon
 MOONWALK i FROM 1 TO 5
-    SAY "Passo número {i}"
+    SING "Passo número {i}"
 ENDMOONWALK
 ```
 
@@ -295,7 +295,7 @@ MoonLang:
 
 ```moon
 BACKSLIDE i FROM 5 TO 1
-    SAY "Voltando: {i}"
+    SING "Voltando: {i}"
 ENDBACKSLIDE
 ```
 
@@ -320,9 +320,9 @@ MoonLang:
 BILLIE idade = 18
 
 THRILLER idade >= 18
-    SAY "Maior de idade"
+    SING "Maior de idade"
 OTHERWISE
-    SAY "Menor de idade"
+    SING "Menor de idade"
 ENDTHRILLER
 ```
 
@@ -349,7 +349,7 @@ MoonLang:
 
 ```moon
 BILLIE integrantes = JACKSON5["Michael", "Janet", "Tito", "Jermaine", "Jackie"]
-SAY integrantes
+SING integrantes
 ```
 
 Python gerado:
@@ -362,7 +362,7 @@ print(integrantes)
 Também é possível acessar um elemento da lista:
 
 ```moon
-SAY integrantes[0]
+SING integrantes[0]
 ```
 
 Python gerado:
@@ -387,7 +387,7 @@ MOONWALK i FROM 1 TO 5
         DONT_STOP
     ENDTHRILLER
 
-    SAY "Número: {i}"
+    SING "Número: {i}"
 ENDMOONWALK
 ```
 
@@ -428,7 +428,7 @@ MOONWALK i FROM 1 TO 5
         BEAT_IT
     ENDTHRILLER
 
-    SAY "Número: {i}"
+    SING "Número: {i}"
 ENDMOONWALK
 ```
 
@@ -465,24 +465,24 @@ HEEHEE "Iniciando o show da MoonLang!"
 
 BILLIE integrantes = JACKSON5["Michael", "Janet", "Tito", "Jermaine", "Jackie"]
 
-SAY "Lista completa dos integrantes:"
-SAY integrantes
+SING "Lista completa dos integrantes:"
+SING integrantes
 
-SAY "Agora vamos chamar os integrantes para o palco..."
+SING "Agora vamos chamar os integrantes para o palco..."
 
 MOONWALK i FROM 0 TO 4
 
     THRILLER integrantes[i] == "Tito"
-        SAY "Tito foi pulado com DONT_STOP."
+        SING "Tito foi pulado com DONT_STOP."
         DONT_STOP
     ENDTHRILLER
 
     THRILLER integrantes[i] == "Jermaine"
-        SAY "Jermaine apareceu. Encerrando o show com BEAT_IT."
+        SING "Jermaine apareceu. Encerrando o show com BEAT_IT."
         BEAT_IT
     ENDTHRILLER
 
-    SAY "No palco agora: {integrantes[i]}"
+    SING "No palco agora: {integrantes[i]}"
 
 ENDMOONWALK
 
@@ -610,7 +610,7 @@ E depois executar o Python gerado:
 python Teste_Linguagem.py
 ```
 
-Caso o arquivo `.moon` seja executado diretamente, o Python apresentará erro de sintaxe, pois comandos como `REMIX`, `SAY`, `MOONWALK` e `THRILLER` pertencem à MoonLang, não ao Python.
+Caso o arquivo `.moon` seja executado diretamente, o Python apresentará erro de sintaxe, pois comandos como `REMIX`, `SING`, `MOONWALK` e `THRILLER` pertencem à MoonLang, não ao Python.
 
 ---
 
