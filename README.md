@@ -73,7 +73,9 @@ print("Olá, mundo!")
 * Comentários começam com `REMIX`.
 * O comando `SING` imprime valores ou mensagens no terminal.
 * O comando `HEEHEE` toca o áudio `heehee.wav`, quando disponível, e também pode imprimir uma mensagem.
-* O comando `BILLIE` é usado para criar variáveis, atribuições e comandos simples.
+* O operador `BILLIE` é usado para atribuição de valores.
+* O operador `WHOS_BAD` é usado para comparação de igualdade.
+* O operador `RUSBE` é usado para comparação de diferença.
 * Blocos condicionais começam com `THRILLER` e terminam com `ENDTHRILLER`.
 * O bloco alternativo de uma condição é escrito com `OTHERWISE`.
 * Laços crescentes começam com `MOONWALK variavel FROM inicio TO fim` e terminam com `ENDMOONWALK`.
@@ -135,7 +137,9 @@ Esse modo é útil durante o desenvolvimento, pois permite editar o código Moon
 | `REMIX`          | `#`                      | Cria um comentário no código                                   |
 | `SING`            | `print()`                | Imprime uma mensagem ou valor no terminal                      |
 | `HEEHEE`         | `tocar_heehee()`         | Toca o áudio `heehee.wav` e pode imprimir uma mensagem         |
-| `BILLIE`         | Comando Python direto    | Cria variáveis, atribuições ou executa comandos simples        |
+| `BILLIE` | `=` | Operador de atribuição |
+| `WHOS_BAD` | `==` | Operador de igualdade |
+| `RUSBE` | `!=` | Operador de diferença |
 | `BEAT`           | `while`                  | Cria um laço de repetição enquanto uma condição for verdadeira |
 | `MOONWALK`       | `for` crescente          | Cria um laço de repetição crescente                            |
 | `BACKSLIDE`      | `for` decrescente        | Cria um laço de repetição decrescente                          |
@@ -161,7 +165,7 @@ REMIX BEAT_IT = break
 
 HEEHEE "Iniciando o show da MoonLang!"
 
-BILLIE integrantes = JACKSON5["Michael", "Janet", "Tito", "Jermaine", "Jackie"]
+integrantes BILLIE JACKSON5["Michael", "Janet", "Tito", "Jermaine", "Jackie"]
 
 SING "Lista completa dos integrantes:"
 SING integrantes
@@ -170,12 +174,12 @@ SING "Agora vamos chamar os integrantes para o palco..."
 
 MOONWALK i FROM 0 TO 4
 
-    THRILLER integrantes[i] == "Tito"
+    THRILLER integrantes[i] WHOS_BAD "Tito"
         SING "Tito foi pulado com DONT_STOP."
         DONT_STOP
     ENDTHRILLER
 
-    THRILLER integrantes[i] == "Jermaine"
+    THRILLER integrantes[i] WHOS_BAD "Jermaine"
         SING "Jermaine apareceu. Encerrando o show com BEAT_IT."
         BEAT_IT
     ENDTHRILLER

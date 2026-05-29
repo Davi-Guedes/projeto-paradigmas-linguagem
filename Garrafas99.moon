@@ -1,18 +1,18 @@
 REMIX Brincadeira das 99 garrafas de cerveja
-REMIX Exemplo usando BACKSLIDE, THRILLER, OTHERWISE e SING
+REMIX Exemplo usando BACKSLIDE, THRILLER, OTHERWISE, BILLIE, WHOS_BAD, RUSBE e SING
 
 HEEHEE "Começando a brincadeira das 99 garrafas!"
 SING ""
 
 BACKSLIDE garrafas FROM 99 TO 1
-    THRILLER garrafas == 1
+    THRILLER garrafas WHOS_BAD 1
         SING "{garrafas} garrafa de cerveja na parede, {garrafas} garrafa de cerveja."
         SING "Pegue uma e passe adiante, nenhuma garrafa de cerveja na parede."
     OTHERWISE
         SING "{garrafas} garrafas de cerveja na parede, {garrafas} garrafas de cerveja."
-        BILLIE restantes = garrafas - 1
+        restantes BILLIE garrafas - 1
 
-        THRILLER restantes == 1
+        THRILLER restantes WHOS_BAD 1
             SING "Pegue uma e passe adiante, {restantes} garrafa de cerveja na parede."
         OTHERWISE
             SING "Pegue uma e passe adiante, {restantes} garrafas de cerveja na parede."

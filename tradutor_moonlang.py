@@ -2,19 +2,19 @@ import sys
 import os
 import time
 
+def traduzir_operadores(texto):
+    texto = texto.replace(" BILLIE ", " = ")
+    texto = texto.replace(" WHOS_BAD ", " == ")
+    texto = texto.replace(" RUSBE ", " != ")
+    return texto
 
 def traduzir_jackson5(texto):
     """
-    Traduz a estrutura de lista da MoonLang para lista Python.
-
-    MoonLang: JACKSON5["Michael", "Janet", "Tito", "Jermaine", "Jackie"]
-    Python:   ["Michael", "Janet", "Tito", "Jermaine", "Jackie"]
-
-    A ideia é que JACKSON5 represente uma lista, fazendo referência
-    ao grupo Jackson 5.
+    Traduz JACKSON5 para lista Python e os operadores da MoonLang.
     """
-    return texto.replace("JACKSON5[", "[")
-
+    texto = texto.replace("JACKSON5[", "[")
+    texto = traduzir_operadores(texto)
+    return texto
 
 def traduzir_linha(linha, indentacao):
     linha = linha.strip()
@@ -73,22 +73,6 @@ def traduzir_linha(linha, indentacao):
             codigo = "    " * indentacao + f"print({conteudo})"
 
         return codigo, indentacao
-
-    # Insere atribuições ou comandos Python diretamente
-    # MoonLang: BILLIE contador = 1
-    # Python:   contador = 1
-    #
-    # Também permite criar listas usando JACKSON5
-    # MoonLang: BILLIE integrantes = JACKSON5["Michael", "Janet", "Tito"]
-    # Python:   integrantes = ["Michael", "Janet", "Tito"]
-    if linha.startswith("BILLIE"):
-        comando = linha.replace("BILLIE", "", 1).strip()
-        comando = traduzir_jackson5(comando)
-
-        if comando == "":
-            raise SyntaxError("Uso correto: BILLIE comando")
-
-        return "    " * indentacao + comando, indentacao
 
     # Interrompe um laço
     # MoonLang: BEAT_IT
@@ -203,6 +187,12 @@ def traduzir_linha(linha, indentacao):
             raise SyntaxError(f"{linha} usado sem bloco correspondente")
 
         return "", indentacao
+
+    # Novo operador BILLIE
+    if " BILLIE " in linha:
+        comando = traduzir_jackson5(linha)
+        return "    " * indentacao + comando, indentacao
+
 
     # Erro caso o comando não pertença à MoonLang
     raise SyntaxError(f"Comando desconhecido: {linha}")

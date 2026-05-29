@@ -13,7 +13,7 @@ def tocar_heehee():
         winsound.PlaySound(arquivo, winsound.SND_FILENAME)
 
 # Brincadeira das 99 garrafas de cerveja
-# Exemplo usando BACKSLIDE, THRILLER, OTHERWISE e SING
+# Exemplo usando BACKSLIDE, THRILLER, OTHERWISE, BILLIE, WHOS_BAD, RUSBE e SING
 tocar_heehee()
 print("Começando a brincadeira das 99 garrafas!")
 print("")
