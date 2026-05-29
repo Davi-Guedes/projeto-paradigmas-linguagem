@@ -3,6 +3,19 @@ import os
 import time
 
 
+def traduzir_jackson5(texto):
+    """
+    Traduz a estrutura de lista da MoonLang para lista Python.
+
+    MoonLang: JACKSON5["Michael", "Janet", "Tito", "Jermaine", "Jackie"]
+    Python:   ["Michael", "Janet", "Tito", "Jermaine", "Jackie"]
+
+    A ideia é que JACKSON5 represente uma lista, fazendo referência
+    ao grupo Jackson 5.
+    """
+    return texto.replace("JACKSON5[", "[")
+
+
 def traduzir_linha(linha, indentacao):
     linha = linha.strip()
 
@@ -22,6 +35,7 @@ def traduzir_linha(linha, indentacao):
     # MoonLang: HEEHEE "Mensagem"
     if linha.startswith("HEEHEE"):
         conteudo = linha.replace("HEEHEE", "", 1).strip()
+        conteudo = traduzir_jackson5(conteudo)
 
         if conteudo == "":
             codigo = "    " * indentacao + "tocar_heehee()"
@@ -46,6 +60,7 @@ def traduzir_linha(linha, indentacao):
     # Python:   print("Oi")
     if linha.startswith("SAY"):
         conteudo = linha.replace("SAY", "", 1).strip()
+        conteudo = traduzir_jackson5(conteudo)
 
         if (
             conteudo.startswith('"')
@@ -62,19 +77,49 @@ def traduzir_linha(linha, indentacao):
     # Insere atribuições ou comandos Python diretamente
     # MoonLang: BILLIE contador = 1
     # Python:   contador = 1
+    #
+    # Também permite criar listas usando JACKSON5
+    # MoonLang: BILLIE integrantes = JACKSON5["Michael", "Janet", "Tito"]
+    # Python:   integrantes = ["Michael", "Janet", "Tito"]
     if linha.startswith("BILLIE"):
         comando = linha.replace("BILLIE", "", 1).strip()
+        comando = traduzir_jackson5(comando)
 
         if comando == "":
             raise SyntaxError("Uso correto: BILLIE comando")
 
         return "    " * indentacao + comando, indentacao
 
+    # Interrompe um laço
+    # MoonLang: BEAT_IT
+    # Python:   break
+    #
+    # A ideia vem da música "Beat It", como se fosse:
+    # "sai fora", "para", "quebra o loop".
+    #
+    # IMPORTANTE:
+    # Esse bloco precisa vir antes do comando BEAT,
+    # porque BEAT_IT também começa com a palavra BEAT.
+    if linha == "BEAT_IT":
+        codigo = "break"
+        return "    " * indentacao + codigo, indentacao
+
+    # Continua para a próxima repetição do laço
+    # MoonLang: DONT_STOP
+    # Python:   continue
+    #
+    # A ideia vem de "Don't Stop", ou seja:
+    # não para o programa, apenas pula para a próxima volta do loop.
+    if linha == "DONT_STOP":
+        codigo = "continue"
+        return "    " * indentacao + codigo, indentacao
+
     # While
     # MoonLang: BEAT contador <= 5
     # Python:   while contador <= 5:
     if linha.startswith("BEAT"):
         condicao = linha.replace("BEAT", "", 1).strip()
+        condicao = traduzir_jackson5(condicao)
 
         if condicao == "":
             raise SyntaxError("Uso correto: BEAT condicao")
@@ -94,8 +139,8 @@ def traduzir_linha(linha, indentacao):
             )
 
         variavel = partes[1]
-        inicio = partes[3]
-        fim = partes[5]
+        inicio = traduzir_jackson5(partes[3])
+        fim = traduzir_jackson5(partes[5])
 
         codigo = f"for {variavel} in range({inicio}, {fim} + 1):"
         return "    " * indentacao + codigo, indentacao + 1
@@ -112,8 +157,8 @@ def traduzir_linha(linha, indentacao):
             )
 
         variavel = partes[1]
-        inicio = partes[3]
-        fim = partes[5]
+        inicio = traduzir_jackson5(partes[3])
+        fim = traduzir_jackson5(partes[5])
 
         codigo = f"for {variavel} in range({inicio}, {fim} - 1, -1):"
         return "    " * indentacao + codigo, indentacao + 1
@@ -123,6 +168,7 @@ def traduzir_linha(linha, indentacao):
     # Python:   if idade >= 18:
     if linha.startswith("THRILLER"):
         condicao = linha.replace("THRILLER", "", 1).strip()
+        condicao = traduzir_jackson5(condicao)
 
         if condicao == "":
             raise SyntaxError("Uso correto: THRILLER condicao")
