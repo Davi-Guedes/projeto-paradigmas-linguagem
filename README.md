@@ -21,7 +21,7 @@ O projeto funciona como um tradutor de MoonLang para Python. Ou seja, o programa
 
 O objetivo principal do trabalho é criar uma linguagem esotérica simples, criativa e funcional, utilizando como base os conceitos estudados em paradigmas de programação.
 
-A MoonLang não busca ser uma linguagem de uso comercial ou profissional. Seu foco é didático e experimental, mostrando como uma linguagem pode possuir:
+A MoonLang não busca ser uma linguagem de uso comercial ou profissional. É uma linguagem esotérica de propósito geral simples, voltada para fins didáticos, mostrando como uma linguagem pode possuir:
 
 * palavras reservadas próprias;
 * sintaxe personalizada;
@@ -63,6 +63,24 @@ SING "Olá, mundo!"
 ```python
 print("Olá, mundo!")
 ```
+
+---
+
+## Regras de sintaxe
+
+* Todo programa MoonLang deve ser salvo com a extensão `.moon`.
+* Cada comando deve ser escrito em uma linha.
+* Comentários começam com `REMIX`.
+* O comando `SING` imprime valores ou mensagens no terminal.
+* O comando `HEEHEE` toca o áudio `heehee.wav`, quando disponível, e também pode imprimir uma mensagem.
+* O comando `BILLIE` é usado para criar variáveis, atribuições e comandos simples.
+* Blocos condicionais começam com `THRILLER` e terminam com `ENDTHRILLER`.
+* O bloco alternativo de uma condição é escrito com `OTHERWISE`.
+* Laços crescentes começam com `MOONWALK variavel FROM inicio TO fim` e terminam com `ENDMOONWALK`.
+* Laços decrescentes começam com `BACKSLIDE variavel FROM inicio TO fim` e terminam com `ENDBACKSLIDE`.
+* Laços `while` começam com `BEAT condicao` e terminam com `ENDBEAT`.
+* `DONT_STOP` só deve ser usado dentro de laços.
+* `BEAT_IT` só deve ser usado dentro de laços.
 
 ---
 
@@ -284,12 +302,12 @@ Caso o arquivo `.moon` seja executado diretamente, o Python apresentará erro de
 
 ## Autores
 
-ANTONIO MATHEUS DA COSTA QUEIROZ - 565556
-AUGUSTO RODRIGUES PAZ GREGORIO - 565690
-DAVI GOMES ROCHA - 564686
-DAVI MOURA GUEDES - 568251
-JHENNIFER KAROLAYNE NASCIMENTO DA PENHA - 567369
-MARCELO HENRIQUE TEIXEIRA DE SOUZA ALVES - 571393
+* ANTONIO MATHEUS DA COSTA QUEIROZ - 565556
+* AUGUSTO RODRIGUES PAZ GREGORIO - 565690
+* DAVI GOMES ROCHA - 564686
+* DAVI MOURA GUEDES - 568251
+* JHENNIFER KAROLAYNE NASCIMENTO DA PENHA - 567369
+* MARCELO HENRIQUE TEIXEIRA DE SOUZA ALVES - 571393
 
 Projeto desenvolvido para a disciplina de Paradigmas de Programação.
 
