@@ -1,10 +1,19 @@
 # MoonLang🕺
 
-MoonLang é uma linguagem de programação esotérica criada como projeto acadêmico da disciplina de Paradigmas de Programação.
+MoonLang é uma linguagem de programação esotérica criada como projeto acadêmico da disciplina de Paradigmas de Programação do curso de Engenharia da Computação da Universidade Federal do Ceará.
 
 A proposta da linguagem é transformar estruturas tradicionais de programação em comandos temáticos inspirados no universo artístico de Michael Jackson. Dessa forma, conceitos como variáveis, condicionais, laços de repetição, listas, comentários e comandos de controle de fluxo são representados por palavras relacionadas ao cantor, suas músicas, danças e expressões marcantes.
 
 O projeto funciona como um tradutor de MoonLang para Python. Ou seja, o programador escreve um arquivo com extensão `.moon`, utilizando a sintaxe própria da MoonLang, e o interpretador/tradutor converte esse código para um arquivo `.py`, que pode ser executado normalmente pelo Python.
+
+---
+
+## Pré-requisitos
+
+* Python 3 instalado.
+* Nenhuma biblioteca externa é necessária.
+* O áudio `heehee.wav` é opcional.
+* Observação: o áudio usa `winsound`, então o som funciona principalmente no Windows. Em outros sistemas, o programa continua executando normalmente, mas pode não tocar o arquivo `.wav`.
 
 ---
 
@@ -274,6 +283,13 @@ Caso o arquivo `.moon` seja executado diretamente, o Python apresentará erro de
 ---
 
 ## Autores
+
+ANTONIO MATHEUS DA COSTA QUEIROZ - 565556
+AUGUSTO RODRIGUES PAZ GREGORIO - 565690
+DAVI GOMES ROCHA - 564686
+DAVI MOURA GUEDES - 568251
+JHENNIFER KAROLAYNE NASCIMENTO DA PENHA - 567369
+MARCELO HENRIQUE TEIXEIRA DE SOUZA ALVES - 571393
 
 Projeto desenvolvido para a disciplina de Paradigmas de Programação.
 
