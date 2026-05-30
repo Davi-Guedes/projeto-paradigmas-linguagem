@@ -315,11 +315,6 @@ Caso o arquivo `.moon` seja executado diretamente, o Python apresentará erro de
 
 O ciclo de vida de um programa MoonLang ocorre em duas etapas obrigatórias: a tradução (onde o interpretador analisa o arquivo `.moon` e transcreve a sintaxe temática para código nativo Python) e a execução do arquivo gerado.
 
-### Pré-requisitos:
-
-* Certifique-se de que o Python 3 está instalado e configurado no seu sistema.
-* O arquivo de áudio `heehee.wav` e o interpretador `tradutor_moonlang.py` devem obrigatoriamente estar no mesmo diretório dos scripts `.moon`.
-
 ---
 
 ### Executando: Hello World!
