@@ -271,11 +271,18 @@ Além disso, o comando `HEEHEE` tenta tocar o arquivo `heehee.wav`, caso ele est
 ```text
 projeto-paradigmas-linguagem/
 │
-├── tradutor_moonlang.py
-├── Teste_Linguagem.moon
-├── Teste_Linguagem.py
-├── heehee.wav
-└── README.md
+├── tradutor_moonlang.py      # Tradutor da MoonLang para Python
+├── README.md                 # Documentação do projeto
+├── heehee.wav                # Áudio usado pelo comando HEEHEE
+│
+├── HelloWorld.moon           # Exemplo simples em MoonLang
+├── HelloWorld.py             # Código Python gerado a partir do HelloWorld.moon
+│
+├── Garrafas99.moon           # Exemplo da brincadeira das 99 garrafas em MoonLang
+├── Garrafas99.py             # Código Python gerado a partir do Garrafas99.moon
+│
+├── AvatarRPG.moon            # Exemplo usando lista, laço, condição, break e continue
+└── AvatarRPG.py              # Código Python gerado a partir do AvatarRPG.moon
 ```
 
 ## Observações importantes
