@@ -304,6 +304,58 @@ Caso o arquivo `.moon` seja executado diretamente, o Python apresentará erro de
 
 ---
 
+## Passo a passo de execução dos programas
+
+O ciclo de vida de um programa MoonLang ocorre em duas etapas obrigatórias: a tradução (onde o interpretador analisa o arquivo `.moon` e transcreve a sintaxe temática para código nativo Python) e a execução do arquivo gerado.
+
+### Pré-requisitos:
+
+* Certifique-se de que o Python 3 está instalado e configurado no seu sistema.
+* O arquivo de áudio `heehee.wav` e o interpretador `tradutor_moonlang.py` devem obrigatoriamente estar no mesmo diretório dos scripts `.moon`.
+
+---
+
+### Executando: Hello World!
+
+Tradução: Abra o terminal no diretório do projeto e execute o comando para processar o arquivo:
+```bash
+python tradutor_moonlang.py HelloWorld.moon
+```
+
+Execução: Após o terminal confirmar a criação do arquivo traduzido, execute-o com:
+```bash
+python HelloWorld.py
+```
+
+---
+
+### Executando: 99 Garrafas de Cerveja
+
+Tradução: No terminal, chame o tradutor apontando para o segundo script:
+```bash
+python tradutor_moonlang.py Garrafas99.moon
+```
+
+Execução: Rode o código Python gerado para iniciar o laço de repetição decrescente:
+```bash
+python Garrafas99.py
+```
+
+---
+
+### Executando: Programa Livre (Treinamento do Avatar)
+
+Tradução: Execute o comando de transpilação do nosso programa customizado:
+```bash
+python tradutor_moonlang.py AvatarRPG.moon
+```
+
+Execução: Rode o script final para visualizar a manipulação da lista de elementos e o controle de fluxo (`continue` e `break` representados na MoonLang) no terminal:
+```bash
+python AvatarRPG.py
+```
+
+
 ## Autores
 
 * ANTONIO MATHEUS DA COSTA QUEIROZ - 565556
